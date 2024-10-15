@@ -1,31 +1,89 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id          String   @id @default(uuid())  
-  email       String?  @unique
-  name        String? 
-  number      String  @unique
-  password    String
+generator client {
+  provider = "prisma-client-js"
 }
 
-model Merchant {
-  id          Int     @id @default(autoincrement())
-  email       String  @unique
-  name        String?
-  auth_type   AuthType   
+// Base User Model
+model User {
+  id            String      @id @default(uuid())
+  phoneNumber   String      @unique
+  email         String      @unique
+  walletBalance Int         @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  sentTransactions    Transaction[] @relation("SentTransactions")
+  receivedTransactions Transaction[] @relation("ReceivedTransactions")
+}
+
+// Base Transaction Model
+model Transaction {
+  id              String            @id @default(uuid())
+  transactionType TransactionType
+  senderId        String
+  receiverId      String
+  amount          Int               // Amount in smallest units (e.g., cents or paise)
+  status          TransactionStatus
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  sender   User @relation("SentTransactions", fields: [senderId], references: [id])
+  receiver User @relation("ReceivedTransactions", fields: [receiverId], references: [id])
+
+  // Relations to specific transaction types
+  p2p      P2PTransaction?
+  qr       QRTransaction?
+  onRamp   OnRampTransaction?
+  offRamp  OffRampTransaction?
+}
+
+// P2P-Specific Model
+model P2PTransaction {
+  id             String   @id @default(uuid())
+  transactionId  String   @unique
+  note           String?  // Optional field for P2P-specific notes
+  Transaction    Transaction @relation(fields: [transactionId], references: [id])
+}
+
+// QR-Specific Model
+model QRTransaction {
+  id             String   @id @default(uuid())
+  transactionId  String   @unique
+  qrCode         String
+  Transaction    Transaction @relation(fields: [transactionId], references: [id])
+}
+
+// On-Ramp-Specific Model
+model OnRampTransaction {
+  id             String   @id @default(uuid())
+  transactionId  String   @unique
+  bankAccount    String   // Bank account details
+  Transaction    Transaction @relation(fields: [transactionId], references: [id])
+}
+
+// Off-Ramp-Specific Model
+model OffRampTransaction {
+  id             String   @id @default(uuid())
+  transactionId  String   @unique
+  payoutDetails  String   // Withdrawal details
+  Transaction    Transaction @relation(fields: [transactionId], references: [id])
+}
+
+enum TransactionType {
+  P2P
+  QR
+  OnRamp
+  OffRamp
+}
+
+enum TransactionStatus {
+  Pending
+  Successful
+  Failed
 }
 
 enum AuthType {

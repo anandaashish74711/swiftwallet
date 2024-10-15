@@ -59,7 +59,7 @@ export default function SignIn() {
         <button type="submit">Sign In</button>
       </form>
       <p>
-        Don't have an account? <Link href="/auth/signup">Sign up</Link>
+        Don't have an account? <Link href="/pages/auth/signup">Sign up</Link>
       </p>
     </div>
   );
