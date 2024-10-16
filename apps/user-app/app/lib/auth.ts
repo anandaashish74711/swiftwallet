@@ -42,8 +42,9 @@ export const Next_AUTH: AuthOptions = {
 
           const isPasswordValid = await bcrypt.compare(
             credentials.password,
-            user.password
+            user.hashedpassword // Ensure correct field name here
           );
+          
 
           console.log('Password Validation:', isPasswordValid);
 

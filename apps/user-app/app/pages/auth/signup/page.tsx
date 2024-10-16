@@ -7,7 +7,7 @@ export default function Signup() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [number, setNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
 
   const handlesubmit = async (e: any) => {
@@ -19,7 +19,7 @@ export default function Signup() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, number }), // Include number here
+        body: JSON.stringify({ email, password, phoneNumber }), // Include number here
       });
 
       const data = await res.json();
@@ -62,8 +62,8 @@ export default function Signup() {
           <label>Phone Number:</label>
           <input
             type="number"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
             required
           />
         </div>

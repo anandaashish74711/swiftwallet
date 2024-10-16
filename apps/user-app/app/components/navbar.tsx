@@ -1,24 +1,34 @@
-// app/components/navbar.tsx
 "use client";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
+import ThemeSwitcher from "./themeprovide";
 
 export const Navbar = () => {
-  const { data: session, status } = useSession(); 
+  const { data: session, status } = useSession();
   const router = useRouter();
 
+  const handleSignIn = () => {
+    router.push("/pages/auth/signin").catch((error) =>
+      console.error("Navigation error:", error)
+    );
+  };
+
+  const handleSignOut = () => {
+    signOut().catch((error) => console.error("Sign out error:", error));
+  };
+
   if (status === "loading") {
-    return <p>Loading...</p>; 
+    return <p aria-live="polite">Loading...</p>;
   }
 
   return (
-    <div>
+    <nav className="bg-white border-gray-200 dark:bg-gray-900">
       {!session ? (
         <button
-          onClick={() => router.push("/pages/auth/signin")}
+          onClick={handleSignIn}
           aria-label="Sign In"
-          className="bg-blue-500 text-white p-2 rounded"
+          className="bg-blue-500 py-7 text-white p-2 rounded"
         >
           Sign In
         </button>
@@ -26,11 +36,7 @@ export const Navbar = () => {
         <>
           <p>Welcome, {session.user?.email}!</p>
           <button
-            onClick={() => {
-              signOut().catch((error) => {
-                console.error("Sign out error", error);
-              });
-            }}
+            onClick={handleSignOut}
             aria-label="Sign Out"
             className="bg-red-500 text-white p-2 rounded"
           >
@@ -38,6 +44,7 @@ export const Navbar = () => {
           </button>
         </>
       )}
-    </div>
+      <ThemeSwitcher />
+      </nav>
   );
 };
