@@ -2,7 +2,7 @@
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
-import Image from "next/image"; // Import Image from Next.js
+import Image from "next/image";
 
 
 export const Navbar = () => {
@@ -10,9 +10,8 @@ export const Navbar = () => {
   const router = useRouter();
 
   const handleSignIn = () => {
-    router.push("/pages/auth/signin").catch((error) =>
-      console.error("Navigation error:", error)
-    );
+    router.push("/pages/auth/signin")
+  
   };
 
   const handleSignOut = () => {
@@ -24,7 +23,7 @@ export const Navbar = () => {
   }
 
   return (
-    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 py-3 shadow-sm fixed top-0 inset-x-0 z-10">
+    <nav className="bg-white border-b  py-3 shadow-sm fixed top-0 inset-x-0 z-10">
       <div className="max-w-5xl mx-auto px-4 flex justify-between items-center">
         {/* Logo Section */}
         <a href="/" className="flex items-center space-x-2">

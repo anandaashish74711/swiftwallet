@@ -1,4 +1,5 @@
 import "./globals.css";
+import Image from "next/image"; 
 
 export default function HERO() {
   return (
@@ -20,15 +21,19 @@ export default function HERO() {
 
         {/* Right Section: Image */}
         <div className="relative">
-          <img
-            src="/picnic.png" // Ensure this points to the correct path in the public directory
+          <Image
+            src="/picnic.png" 
             alt="Happy users"
+            width={500}  // Example width
+            height={500} // Example height
             className="rounded-3xl shadow-lg"
           />
           <div className="absolute bottom-4 left-4 bg-white p-3 rounded-lg shadow-md flex items-center space-x-2">
-            <img
-              src="profile.png" // Replace with actual profile image if needed
+            <Image
+              src="/profile.png" 
               alt="Profile"
+              width={40} 
+              height={40}
               className="w-10 h-10 rounded-full"
             />
             <p className="text-sm text-gray-800">

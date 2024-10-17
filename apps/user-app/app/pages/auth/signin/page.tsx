@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // For Next.js 13+
 import { getCsrfToken, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import Image from "next/image"; // For logo
+import Image from "next/image"; 
 
 export default function SignIn() {
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
@@ -34,13 +34,13 @@ export default function SignIn() {
     const password = event.currentTarget.password.value;
 
     const result = await signIn("credentials", {
-      redirect: false, // Prevent immediate redirect
+      redirect: false, 
       email,
       password,
     });
 
     if (result?.ok) {
-      router.push("/pages/Dashboard"); // Redirect on success
+      router.push("/pages/Dashboard"); 
     } else {
       alert("Invalid email or password");
     }
@@ -80,12 +80,12 @@ export default function SignIn() {
 
           <div>
             <label htmlFor="email" className="block text-blue-600 mb-1">
-              Email
+            
             </label>
             <input
               name="email"
               type="email"
-              placeholder="Your email address"
+              placeholder="Enter email or username"
               required
               className="w-full px-2 py-2 rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-blue-400"
             />
@@ -93,20 +93,20 @@ export default function SignIn() {
 
           <div>
             <label htmlFor="password" className="block text-blue-600 mb-1">
-              Password
+            
             </label>
             <input
               name="password"
               type="password"
-              placeholder="Your password"
+              placeholder="password"
               required
-              className="w-full px-2 py-2 rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-blue-400"
+              className="w-full px-4 py-2 rounded-full border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-blue-400"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full font-semibold transition-all duration-300"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full font-semibold transition-all duration-300"
           >
             Sign In
           </button>
