@@ -7,71 +7,83 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Base User Model
 model User {
-  id            String      @id @default(uuid())
-  phoneNumber   String      @unique
-  email         String      @unique
-  hashedpassword      String
-  walletBalance Int         @default(0)
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  id             String   @id @default(uuid())
+  phoneNumber    String   @unique
+  email          String   @unique
+  hashedpassword String
+  walletBalance  Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  sentTransactions    Transaction[] @relation("SentTransactions")
+  // Define the relation from User to Wallet (no `fields` and `references` here)
+  wallet               Wallet?
+  sentTransactions     Transaction[] @relation("SentTransactions")
   receivedTransactions Transaction[] @relation("ReceivedTransactions")
 }
 
-// Base Transaction Model
+model Wallet {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  balance   Int      @default(0)
+  currency  String   @default("INR")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Define the relation here with `fields` and `references`
+  user         User          @relation(fields: [userId], references: [id])
+  transactions Transaction[]
+}
+
 model Transaction {
   id              String            @id @default(uuid())
   transactionType TransactionType
   senderId        String
   receiverId      String
-  amount          Int               // Amount in smallest units (e.g., cents or paise)
+  walletId        String // Add this field to store the related wallet's ID
+  amount          Int // Amount in smallest units (e.g., cents or paise)
   status          TransactionStatus
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+
+  wallet Wallet @relation(fields: [walletId], references: [id]) // Correct relation
 
   sender   User @relation("SentTransactions", fields: [senderId], references: [id])
   receiver User @relation("ReceivedTransactions", fields: [receiverId], references: [id])
 
   // Relations to specific transaction types
-  p2p      P2PTransaction?
-  qr       QRTransaction?
-  onRamp   OnRampTransaction?
-  offRamp  OffRampTransaction?
+  p2p     P2PTransaction?
+  qr      QRTransaction?
+  onRamp  OnRampTransaction?
+  offRamp OffRampTransaction?
 }
 
-// P2P-Specific Model
 model P2PTransaction {
-  id             String   @id @default(uuid())
-  transactionId  String   @unique
-  note           String?  // Optional field for P2P-specific notes
-  Transaction    Transaction @relation(fields: [transactionId], references: [id])
+  id            String      @id @default(uuid())
+  transactionId String      @unique
+  note          String? // Optional field for P2P-specific notes
+  Transaction   Transaction @relation(fields: [transactionId], references: [id])
 }
 
-// QR-Specific Model
 model QRTransaction {
-  id             String   @id @default(uuid())
-  transactionId  String   @unique
-  qrCode         String
-  Transaction    Transaction @relation(fields: [transactionId], references: [id])
+  id            String      @id @default(uuid())
+  transactionId String      @unique
+  qrCode        String
+  Transaction   Transaction @relation(fields: [transactionId], references: [id])
 }
 
-// On-Ramp-Specific Model
 model OnRampTransaction {
-  id             String   @id @default(uuid())
-  transactionId  String   @unique
-  bankAccount    String   // Bank account details
-  Transaction    Transaction @relation(fields: [transactionId], references: [id])
+  id            String      @id @default(uuid())
+  transactionId String      @unique
+  bankAccount   String // Bank account details
+  Transaction   Transaction @relation(fields: [transactionId], references: [id])
 }
 
-// Off-Ramp-Specific Model
 model OffRampTransaction {
-  id             String   @id @default(uuid())
-  transactionId  String   @unique
-  payoutDetails  String   // Withdrawal details
-  Transaction    Transaction @relation(fields: [transactionId], references: [id])
+  id            String      @id @default(uuid())
+  transactionId String      @unique
+  payoutDetails String // Withdrawal details
+  Transaction   Transaction @relation(fields: [transactionId], references: [id])
 }
 
 enum TransactionType {

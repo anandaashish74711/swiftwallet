@@ -1,0 +1,12 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "dist",          // Compiled JS output directory
+    "rootDir": "src",           // Source code directory
+    "strict": true,             // Enforce strict type-checking options
+    "esModuleInterop": true,    // Enable interoperability between CommonJS and ES modules
+    "target": "es6"             // Output JavaScript targeting ES6
+  },
+  "include": ["src/**/*.ts"],   // Include all TS files in src folder
+  "exclude": ["node_modules", "dist"]  // Exclude compiled output and node_modules
+}
