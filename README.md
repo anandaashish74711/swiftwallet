@@ -1,4 +1,4 @@
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+
 - ![image](https://github.com/user-attachments/assets/5ef0f92e-20cb-482f-8a39-eb65a0245438)
 - ![image](https://github.com/user-attachments/assets/3f66bb4b-7d5a-4d76-a144-86068f7107ce)
 - ![image](https://github.com/user-attachments/assets/5cdf6a6b-3919-4d42-9ad7-710f2c4e9057)
