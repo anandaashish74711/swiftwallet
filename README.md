@@ -1,3 +1,11 @@
+- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+- ![image](https://github.com/user-attachments/assets/5ef0f92e-20cb-482f-8a39-eb65a0245438)
+- ![image](https://github.com/user-attachments/assets/3f66bb4b-7d5a-4d76-a144-86068f7107ce)
+- ![image](https://github.com/user-attachments/assets/5cdf6a6b-3919-4d42-9ad7-710f2c4e9057)
+- ![image](https://github.com/user-attachments/assets/ced5620f-8028-452a-b3d5-860a7f325ce4)
+
+
+
 # Turborepo starter
 
 This is an official starter Turborepo.
@@ -67,7 +75,7 @@ Next, you can link your Turborepo to your Remote Cache by running the following 
 
 ```
 npx turbo link
-```
+
 
 ## Useful Links
 
@@ -78,12 +86,5 @@ Learn more about the power of Turborepo:
 - [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
 - [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
-- ![image](https://github.com/user-attachments/assets/5ef0f92e-20cb-482f-8a39-eb65a0245438)
-- ![image](https://github.com/user-attachments/assets/3f66bb4b-7d5a-4d76-a144-86068f7107ce)
-- ![image](https://github.com/user-attachments/assets/5cdf6a6b-3919-4d42-9ad7-710f2c4e9057)
-- ![image](https://github.com/user-attachments/assets/ced5620f-8028-452a-b3d5-860a7f325ce4)
 
-
-
-
+```
