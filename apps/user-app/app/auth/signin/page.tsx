@@ -9,7 +9,7 @@ import Image from "next/image";
 export default function SignIn() {
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const router = useRouter();
-  const { data: session } = useSession(); // Track authentication state
+  const { data: session } = useSession(); 
 
   useEffect(() => {
     // Fetch CSRF token on component mount
@@ -22,8 +22,8 @@ export default function SignIn() {
 
   // Redirect to dashboard if already signed in
   useEffect(() => {
-    if (session) {
-      router.push("/pages/Dashboard");
+    if (session) {  
+      router.push("/Dashboard");
     }
   }, [session, router]);
 
@@ -40,7 +40,7 @@ export default function SignIn() {
     });
 
     if (result?.ok) {
-      router.push("/pages/Dashboard"); 
+      router.push("/app/Dashboard"); 
     } else {
       alert("Invalid email or password");
     }

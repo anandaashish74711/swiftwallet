@@ -8,7 +8,7 @@ export const Next_AUTH: AuthOptions = {
     CredentialsProvider({
       name: 'credentials',
       credentials: {
-        username: {
+        email: {
           label: 'Email',
           type: 'text',
           placeholder: 'Enter your email',

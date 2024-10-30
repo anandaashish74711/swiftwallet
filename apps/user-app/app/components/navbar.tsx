@@ -11,7 +11,7 @@ export const Navbar = () => {
   console.log(status)
 
   const handleSignIn = () => {
-    router.push("/pages/auth/signin");
+    router.push("/auth/signin");
   };
 
   const handleSignOut = async () => {
