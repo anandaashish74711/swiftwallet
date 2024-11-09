@@ -1,62 +1,62 @@
-"use client";  // Ensure this is the very first line
+'use client';
 
+import type { ReactElement } from 'react';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
+import DashboardSidebar from '@/app/(Dashboard)/Sidebar';
 
-// Define types for NavItem props
-interface NavItemProps {
-  icon: string;
-  label: string;
-  onClick?: () => void; 
-}
+// Components
+const ActionButton = ({ label }: { label: string }): ReactElement => (
+  <button className="flex-1 bg-purple-600 text-white py-3 rounded-lg shadow-md hover:bg-purple-700 transition">
+    {label}
+  </button>
+);
 
-function NavItem({ icon, label, onClick }: NavItemProps) {
+const GraphPlaceholder = (): ReactElement => (
+  <div className="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
+    Graph Placeholder
+  </div>
+);
+
+const TimeRangeSelector = (): ReactElement => {
+  const ranges = ['1W', '1M', '3M', '6M', '1Y', 'ALL'];
+  
   return (
-    <div
-      className="flex items-center space-x-4 text-gray-600 hover:text-purple-600 cursor-pointer"
-      onClick={onClick}
-    >
-      <span className={`icon-${icon} text-xl`}></span>
-      <span className="text-lg">{label}</span>
+    <div className="mt-4 flex space-x-4">
+      {ranges.map((range) => (
+        <button
+          key={range}
+          className="bg-gray-100 text-gray-700 px-3 py-1 rounded-md hover:bg-purple-100"
+        >
+          {range}
+        </button>
+      ))}
     </div>
   );
-}
+};
 
-// Define type for ActionButton props
-interface ActionButtonProps {
-  label: string;
-}
-
-function ActionButton({ label }: ActionButtonProps) {
-  return (
-    <button className="flex-1 bg-purple-600 text-white py-3 rounded-lg shadow-md hover:bg-purple-700 transition">
-      {label}
+const PromotionCard = (): ReactElement => (
+  <div className="bg-purple-50 p-4 rounded-lg shadow-md text-center">
+    <h4 className="text-xl font-semibold text-purple-800 mb-2">
+      Set up recurring buys
+    </h4>
+    <p className="text-sm text-gray-700 mb-4">
+      Schedule regular crypto purchases to balance market fluctuations.
+    </p>
+    <button className="bg-purple-600 text-white px-4 py-2 rounded-full shadow-md hover:bg-purple-700">
+      Get started
     </button>
-  );
-}
+  </div>
+);
 
-export default function Dashboard() {
-  const [portfolioValue, setPortfolioValue] = useState(0.0);
-  const router = useRouter(); 
+export default function Dashboard(): ReactElement {
+  const [portfolioValue, setPortfolioValue] = useState<number>(0.0);
+ 
 
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md px-6 py-8">
-        <h1 className="text-2xl font-bold text-purple-600">Kraken</h1>
-        <nav className="mt-10 space-y-6">
-          <NavItem icon="home" label="Home" />
-          <NavItem icon="search" label="Explore" />
-          <NavItem icon="percent" label="Rewards" />
-          <NavItem
-            icon="arrows-left-right"
-            label="Transfer"
-            onClick={() => router.push('/Transfer')}
-          />
-          <NavItem icon="clock" label="Transactions" />
-        </nav>
-      </aside>
+      <DashboardSidebar />
 
       {/* Main Content */}
       <main className="flex-1 px-8 py-6">
@@ -92,44 +92,6 @@ export default function Dashboard() {
       <aside className="w-80 bg-white shadow-md p-6">
         <PromotionCard />
       </aside>
-    </div>
-  );
-}
-
-function GraphPlaceholder() {
-  return (
-    <div className="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
-      Graph Placeholder
-    </div>
-  );
-}
-
-function TimeRangeSelector() {
-  const ranges = ['1W', '1M', '3M', '6M', '1Y', 'ALL'];
-  return (
-    <div className="mt-4 flex space-x-4">
-      {ranges.map((range) => (
-        <button
-          key={range}
-          className="bg-gray-100 text-gray-700 px-3 py-1 rounded-md hover:bg-purple-100"
-        >
-          {range}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function PromotionCard() {
-  return (
-    <div className="bg-purple-50 p-4 rounded-lg shadow-md text-center">
-      <h4 className="text-xl font-semibold text-purple-800 mb-2">Set up recurring buys</h4>
-      <p className="text-sm text-gray-700 mb-4">
-        Schedule regular crypto purchases to balance market fluctuations.
-      </p>
-      <button className="bg-purple-600 text-white px-4 py-2 rounded-full shadow-md hover:bg-purple-700">
-        Get started
-      </button>
     </div>
   );
 }

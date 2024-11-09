@@ -1,18 +1,17 @@
-"use client"; // This is a client-side component
+"use client"; // Client-side component
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // For Next.js 13+
+import { useRouter } from "next/navigation";
 import { getCsrfToken, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import Image from "next/image"; 
+import Image from "next/image";
 
 export default function SignIn() {
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const router = useRouter();
-  const { data: session } = useSession(); 
+  const { data: session } = useSession();
 
   useEffect(() => {
-    // Fetch CSRF token on component mount
     const fetchCsrfToken = async () => {
       const token = await getCsrfToken();
       setCsrfToken(token);
@@ -22,7 +21,7 @@ export default function SignIn() {
 
   // Redirect to dashboard if already signed in
   useEffect(() => {
-    if (session) {  
+    if (session) {
       router.push("/Dashboard");
     }
   }, [session, router]);
@@ -34,13 +33,13 @@ export default function SignIn() {
     const password = event.currentTarget.password.value;
 
     const result = await signIn("credentials", {
-      redirect: false, 
+      redirect: false,
       email,
       password,
     });
 
     if (result?.ok) {
-      router.push("/app/Dashboard"); 
+      router.push("/Dashboard");
     } else {
       alert("Invalid email or password");
     }
@@ -49,7 +48,6 @@ export default function SignIn() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
       <div className="bg-white p-5 rounded-xl shadow-md w-full max-w-sm">
-        {/* Logo Section */}
         <div className="flex justify-center mb-4">
           <Image
             src="/nimbo.png"
@@ -61,26 +59,17 @@ export default function SignIn() {
           />
         </div>
 
-        {/* Header */}
         <h1 className="text-2xl font-bold text-blue-700 text-center mb-2">
           Welcome Back
         </h1>
-        <p className="text-center text-blue-500 mb-4">
-          Sign in to your account
-        </p>
+        <p className="text-center text-blue-500 mb-4">Sign in to your account</p>
 
-        {/* Form Section */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            name="csrfToken"
-            type="hidden"
-            value={csrfToken || ""}
-            readOnly
-          />
+          <input name="csrfToken" type="hidden" value={csrfToken || ""} readOnly />
 
           <div>
             <label htmlFor="email" className="block text-blue-600 mb-1">
-            
+              Email
             </label>
             <input
               name="email"
@@ -93,7 +82,7 @@ export default function SignIn() {
 
           <div>
             <label htmlFor="password" className="block text-blue-600 mb-1">
-            
+              Password
             </label>
             <input
               name="password"
@@ -114,10 +103,7 @@ export default function SignIn() {
 
         <p className="text-center text-blue-500 mt-4">
           Don’t have an account?{" "}
-          <Link
-            href="/pages/auth/signup"
-            className="text-blue-600 hover:text-blue-700 font-medium"
-          >
+          <Link href="/pages/auth/signup" className="text-blue-600 hover:text-blue-700 font-medium">
             Sign up
           </Link>
         </p>
