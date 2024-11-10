@@ -1,16 +1,19 @@
 import express ,{ Application, Request, Response} from 'express'
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
-
+import cors from 'cors';
+import walletRoute from './routes/wallet.route';
 // Middleware to parse JSON requests
 app.use(express.json());
+app.use(cors())
 
 // Basic route
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello from the Express server!');
 });
+app.use('/api', walletRoute);
 
-// Route with parameters
+
 
 
 // Start the server
