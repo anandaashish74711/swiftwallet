@@ -3,7 +3,7 @@
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 
-import DashboardSidebar from '@/app/(Dashboard)/Sidebar';
+
 
 // Components
 const ActionButton = ({ label }: { label: string }): ReactElement => (
@@ -55,8 +55,7 @@ export default function Dashboard(): ReactElement {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <DashboardSidebar />
+   
 
       {/* Main Content */}
       <main className="flex-1 px-8 py-6">

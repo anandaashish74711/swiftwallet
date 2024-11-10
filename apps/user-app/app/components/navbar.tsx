@@ -1,26 +1,15 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
+import {  useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import Image from "next/image";
 
 export const Navbar = () => {
-  const { data: session, status } = useSession(); // Always called at the top level
+  const { data: session, status } = useSession(); 
   const router = useRouter();
-
-  console.log(status)
 
   const handleSignIn = () => {
     router.push("/auth/signin");
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await signOut({ redirect: false }); // Prevent automatic redirect
-      router.replace("/"); // Replace ensures no back navigation to dashboard
-    } catch (error) {
-      console.error("Sign out error:", error);
-    }
   };
 
   // Handle redirect to the root page if the session is null
@@ -28,8 +17,8 @@ export const Navbar = () => {
     if (status === "unauthenticated") {
       router.replace("/"); // Ensure no flicker of the dashboard
     }
-  }, [status]); // Always ensure dependencies are stable
-  
+  }, [status]);
+
   if (status === "loading") {
     return <p aria-live="polite">Loading...</p>;
   }
@@ -47,7 +36,7 @@ export const Navbar = () => {
             priority
             className="rounded-full"
           />
-          <span className="text-2xl font-extrabold text-blue-600 dark:text-blue-400"></span>
+          <span className="text-2xl font-extrabold text-blue-600 dark:text-blue-400">Nimbo</span>
         </a>
 
         {/* Authentication Section */}
@@ -61,13 +50,7 @@ export const Navbar = () => {
               Sign In
             </button>
           ) : (
-            <button
-              onClick={handleSignOut}
-              aria-label="Sign Out"
-              className="bg-red-500 hover:bg-red-600 text-white font-medium px-4 py-2 rounded-full transition-colors duration-200"
-            >
-              Sign Out
-            </button>
+            <span className="text-gray-700 font-medium">Welcome, {session.user?.name}</span>
           )}
         </div>
       </div>
