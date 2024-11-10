@@ -40,7 +40,7 @@ export default function DashboardSidebar(): ReactElement {
           <NavItem icon="home" label="Home" onClick={() => router.push('/Dashboard')} />
           <NavItem icon="percent" label="Deposit" onClick={() => router.push('/Deposit')} />
           <NavItem icon="arrows-left-right" label="Transfer" onClick={() => router.push('/Transfer')} />
-          <NavItem icon="clock" label="Transactions" onClick={() => router.push('/Transactions')} />
+          <NavItem icon="clock" label="Transactions" onClick={() => router.push('/Transictions')} />
         </nav>
       </div>
 
@@ -55,9 +55,11 @@ export default function DashboardSidebar(): ReactElement {
             className="rounded-full"
           />
         ) : (
-          <img
+          <Image
             src="/path/to/default-profile.jpg" // Replace with a default image path
             alt="Default Profile"
+            width={40}
+            height={40}
             className="w-10 h-10 rounded-full"
           />
         )}
