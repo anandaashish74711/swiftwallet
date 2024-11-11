@@ -17,7 +17,7 @@ export default function DepositPage(): ReactElement {
                 body: JSON.stringify({ amount })
             });
             if (response.ok) {
-                const message = await response.json();
+                const message = await response.text();
                 console.log("Server response:", message);
             } else {
                 console.log("Deposit failed with status:", response.status);
@@ -39,7 +39,7 @@ export default function DepositPage(): ReactElement {
             });
 
             if (response.ok) {
-                const message = await response.json();
+                const message = await response.text();
                 console.log("Server response:", message);
             } else {
                 console.log("Withdrawal failed with status:", response.status);
