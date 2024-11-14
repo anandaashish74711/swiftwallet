@@ -1,15 +1,14 @@
 
 import express, { Request, Response } from 'express';
+import {handleDeposit} from '../controller/handleDeposit'
+import {handleWithdrawal} from '../controller/handleWithdrawal'
 
 
 const route = express.Router();
 
-route.post('/deposit', (req: Request, res: Response) => {
-    res.send('Deposit endpoint');
-});
+route.post('/deposit',handleDeposit);
 
-route.post('/withdraw', (req: Request, res: Response) => {
-    res.send('Withdrawal endpoint');
-});
+route.post('/withdraw',handleWithdrawal);
+
 
 export default route;
