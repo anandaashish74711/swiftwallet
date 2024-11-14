@@ -14,8 +14,11 @@ export default function RootLayout({
       <body className={``}>
      
         <Providers>
+          
         <Navbar />
+        <div className="mt-10">
         {children}
+        </div>
         </Providers>
       
       </body>

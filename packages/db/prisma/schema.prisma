@@ -40,8 +40,8 @@ model Transaction {
   transactionType TransactionType
   senderId        String
   receiverId      String
-  walletId        String // Add this field to store the related wallet's ID
-  amount          Int // Amount in smallest units (e.g., cents or paise)
+  walletId        String 
+  amount          Int 
   status          TransactionStatus
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt

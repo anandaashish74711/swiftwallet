@@ -33,7 +33,7 @@ export default function DashboardSidebar(): ReactElement {
   };
 
   return (
-    <aside className="w-64 bg-white shadow-md px-6 py-8 flex flex-col justify-between h-screen">
+    <aside className="fixed top-0 left-0 w-64 bg-white shadow-md px-6 py-10 h-full flex flex-col justify-between">
       <div>
         <h1 className="text-2xl font-bold text-purple-600">Kraken</h1>
         <nav className="mt-10 space-y-6">
@@ -63,6 +63,8 @@ export default function DashboardSidebar(): ReactElement {
             className="w-10 h-10 rounded-full"
           />
         )}
+
+        
         <div className="flex flex-col">
           <span className="font-medium text-gray-700">{session?.user?.name || "John Doe"}</span>
           <button

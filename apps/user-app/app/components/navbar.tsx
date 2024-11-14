@@ -15,9 +15,10 @@ export const Navbar = () => {
   // Handle redirect to the root page if the session is null
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.replace("/"); // Ensure no flicker of the dashboard
+      router.replace("/"); // Avoiding unnecessary redirects
     }
-  }, [status]);
+  }, [status, router]);
+  
 
   if (status === "loading") {
     return <p aria-live="polite">Loading...</p>;
@@ -50,7 +51,7 @@ export const Navbar = () => {
               Sign In
             </button>
           ) : (
-            <span className="text-gray-700 font-medium">Welcome, {session.user?.name}</span>
+            <span className="text-gray-700 font-medium">Welcome, {session.user?.email}</span>
           )}
         </div>
       </div>

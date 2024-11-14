@@ -10,9 +10,8 @@ export default function DashboardLayout({
 }): ReactElement {
   return (
     <div className="flex min-h-screen bg-gray-50">
-    
       <DashboardSidebar />
-      <main style={{ flex: 1, padding: '20px' }}> {/* Main content area */}
+      <main className="flex-1 ml-64 p-6"> {/* Main content area with margin */}
         {children}
       </main>
     </div>
