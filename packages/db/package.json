@@ -5,7 +5,7 @@
     "@prisma/client": "latest"
   },
   "devDependencies": {
-    "prisma": "latest"
+    "prisma": "^5.22.0"
   },
   "scripts": {
     "db:generate": "prisma generate",
