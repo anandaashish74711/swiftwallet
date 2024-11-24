@@ -9,12 +9,15 @@ const BankPage = () => {
     const [isOtpSent, setIsOtpSent] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
 
+
+
+
     const handleRequestOtp = async () => {
         if (!email) {
             alert('Please enter a registered email.');
             return;
         }
-        const response = await fetch('/api/send-deposit-otp', {
+        const response = await fetch('http://localhost:5000/api/send-deposit-otp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email }),
@@ -27,6 +30,8 @@ const BankPage = () => {
             alert('Failed to send OTP. Please try again.');
         }
     };
+
+
 
     const handleVerifyOtp = async () => {
         if (!otp || !amount) {
@@ -48,6 +53,7 @@ const BankPage = () => {
         }
     };
 
+    
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full">

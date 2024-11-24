@@ -11,12 +11,13 @@ model User {
   id             String   @id @default(uuid())
   phoneNumber    String   @unique
   email          String   @unique
+     
   hashedpassword String
-  walletBalance  Int      @default(0)
+  
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  // Define the relation from User to Wallet (no `fields` and `references` here)
+ 
   wallet               Wallet?
   sentTransactions     Transaction[] @relation("SentTransactions")
   receivedTransactions Transaction[] @relation("ReceivedTransactions")
@@ -25,14 +26,22 @@ model User {
 model Wallet {
   id        String   @id @default(uuid())
   userId    String   @unique
-  balance   Int      @default(0)
+  balance   Int      @default(1000)
   currency  String   @default("INR")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  otp        String @default("")
 
   // Define the relation here with `fields` and `references`
   user         User          @relation(fields: [userId], references: [id])
   transactions Transaction[]
+}
+model Otp {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  otp       String   @db.VarChar(6)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
 }
 
 model Transaction {
