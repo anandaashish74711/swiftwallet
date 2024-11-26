@@ -1,4 +1,4 @@
-// import * as nodemailer from 'nodemailer';
+
 const nodemailer = require("nodemailer");
 import { Request, Response } from 'express';
 import { otpmaker } from '../utils/otpmaker';

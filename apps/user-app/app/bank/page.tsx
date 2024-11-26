@@ -1,15 +1,15 @@
 "use client"
 
 import React, { useState } from 'react';
+import { useSearchParams } from "next/navigation";
 
 const BankPage = () => {
     const [email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
-    const [amount, setAmount] = useState('');
     const [isOtpSent, setIsOtpSent] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
-
-
+    const searchParams = useSearchParams();
+    const amount = searchParams.get("amount");
 
 
     const handleRequestOtp = async () => {
@@ -34,14 +34,14 @@ const BankPage = () => {
 
 
     const handleVerifyOtp = async () => {
-        if (!otp || !amount) {
-            alert('Please enter the OTP and deposit amount.');
+        if (!otp ) {
+            alert('Please enter the OTP .');
             return;
         }
         const response = await fetch('/api/webhook/verify-otp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, otp, amount }),
+            body: JSON.stringify({ email, otp ,amount}),
         });
 
         const data = await response.json();
@@ -53,7 +53,6 @@ const BankPage = () => {
         }
     };
 
-    
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
@@ -79,13 +78,6 @@ const BankPage = () => {
 
                 {isOtpSent && (
                     <>
-                        <input
-                            type="number"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
-                            placeholder="Enter deposit amount"
-                            className="border border-gray-300 rounded-lg px-4 py-2 w-full mb-4 focus:outline-none focus:border-blue-500"
-                        />
                         <input
                             type="text"
                             value={otp}
