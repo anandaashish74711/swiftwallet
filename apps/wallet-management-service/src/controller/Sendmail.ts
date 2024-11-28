@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 // Express route handler to send email
 export async function main(req: Request, res: Response) {
   try {
-    // Extract email details from the request body
+    
     const { email } = req.body;
     const otp = otpmaker(6);
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000);

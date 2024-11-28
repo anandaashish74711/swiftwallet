@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useState } from 'react';
 import { useSearchParams } from "next/navigation";
 
@@ -38,20 +37,29 @@ const BankPage = () => {
             alert('Please enter the OTP .');
             return;
         }
-        const response = await fetch('/api/webhook/verify-otp', {
+        try{
+        const response = await fetch('http://localhost:5000/api/webhook/verify-otp', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json' }
+            ,
             body: JSON.stringify({ email, otp ,amount}),
         });
 
         const data = await response.json();
+        
         if (response.ok && data.message === 'Deposit successful') {
             setIsVerified(true);
-            alert(`Deposit successful! New balance: ${data.balance}`);
+            alert(`Deposit successful`);
         } else {
             alert(data.error || 'Failed to verify OTP.');
+        }}catch(error:any){
+            console.error('Error verifying OTP:', error);
+            alert('Something went wrong. Please try again later.');
         }
     };
+
+
+
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">

@@ -8,7 +8,7 @@ const route = express.Router();
 
 route.post('/deposit',handleDeposit);
 
-route.post('/withdraw',handleWithdrawal);
+route.post('/webhook/verify-otp',handleWithdrawal);
 
 
 export default route;
