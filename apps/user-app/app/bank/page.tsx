@@ -25,6 +25,7 @@ const BankPage = () => {
         if (response.ok) {
             setIsOtpSent(true);
             alert('OTP sent to your email.');
+            
         } else {
             alert('Failed to send OTP. Please try again.');
         }
@@ -46,12 +47,13 @@ const BankPage = () => {
         });
 
         const data = await response.json();
-        
-        if (response.ok && data.message === 'Deposit successful') {
+       
+      
+        if (response.ok) {
             setIsVerified(true);
-            alert(`Deposit successful`);
+            alert("Deposit sucessful")
         } else {
-            alert(data.error || 'Failed to verify OTP.');
+            alert(data.message);
         }}catch(error:any){
             console.error('Error verifying OTP:', error);
             alert('Something went wrong. Please try again later.');

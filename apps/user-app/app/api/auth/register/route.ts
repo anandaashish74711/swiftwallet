@@ -9,6 +9,7 @@ export async function POST(request: Request) {
     const { email, password, phoneNumber } = await request.json();
     console.log("Request Body:", { email, password, phoneNumber });
 
+    // Check if the user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
@@ -18,19 +19,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'User already exists' }, { status: 400 });
     }
 
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log("Password hashed");
 
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        phoneNumber,
-        hashedpassword: hashedPassword, // Ensure this matches the schema exactly
-      },
+    // Create user with wallet
+    const newUser = await createUserWithWallet({
+      phoneNumber,
+      email,
+      hashedpassword: hashedPassword,
     });
-    
 
     console.log("User created:", newUser);
+
     return NextResponse.json(
       { message: 'User registered successfully', user: newUser },
       { status: 201 }
@@ -39,4 +40,28 @@ export async function POST(request: Request) {
     console.error("Error occurred:", error);
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
   }
+}
+
+async function createUserWithWallet(userData: { phoneNumber: string; email: string; hashedpassword: string }) {
+  return await prisma.$transaction(async (tx) => {
+    // Create the user
+    const user = await tx.user.create({
+      data: {
+        phoneNumber: userData.phoneNumber,
+        email: userData.email,
+        hashedpassword: userData.hashedpassword,
+      },
+    });
+
+    // Create the wallet
+    await tx.wallet.create({
+      data: {
+        userId: user.id,
+        balance: 1000, 
+        currency: "INR", 
+      },
+    });
+
+    return user;
+  });
 }

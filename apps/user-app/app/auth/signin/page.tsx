@@ -10,16 +10,18 @@ export default function SignIn() {
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const router = useRouter();
   const { data: session } = useSession();
+  
 
   useEffect(() => {
     const fetchCsrfToken = async () => {
       const token = await getCsrfToken();
+     
       setCsrfToken(token);
     };
     fetchCsrfToken();
   }, []);
 
-  // Redirect to dashboard if already signed in
+ 
   useEffect(() => {
     if (session) {
       router.push("/Dashboard");
