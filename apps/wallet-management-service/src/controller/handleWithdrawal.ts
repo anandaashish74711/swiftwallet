@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 
+
 const prisma = new PrismaClient();
 
 
@@ -22,7 +23,7 @@ const userId = user.id;
     });
 
     console.log('DB OTP record:', dbValue);
-
+   
     // Check if OTP exists
     if (!dbValue) {
       return res.status(404).json({ message: 'OTP not found or already used.' });
@@ -43,19 +44,20 @@ const userId = user.id;
       return res.status(400).json({ message: 'OTP has expired.' });
     }
 
-    // Fetch the user's wallet
+    console.log('userId being used in query:', userId);
+const wallet = await prisma.wallet.findUnique({
+  where: { userId },
+});
+
    
-    const wallet = await prisma.wallet.findUnique({
-      where: { userId },
-    });
-    console.log(wallet?.balance)
 
     if (!wallet) {
       return res.status(404).json({ message: 'Wallet not found.' });
     }
-
-    // Calculate the new balance (add the amount to the current balance)
-    const newBalance = wallet.balance + amount;
+    const num = Number(amount);
+ 
+   
+    const newBalance = wallet.balance + num;
 
     // Perform the wallet update and OTP deletion within a transaction
     const [updatedWallet] = await prisma.$transaction([
